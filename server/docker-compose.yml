@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  server:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://root:password@db:5432/db
+      PORT: 80
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
